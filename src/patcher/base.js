@@ -23,7 +23,7 @@ export default class BasePatcher {
     FilesHelpter.needFolder('output/single_date')
     if (data instanceof Object) {
       for ( let title in data ) {
-        FilesHelpter.create(`output/single_date/${title}.csv`, true)
+        FilesHelpter.create(`output/${title}.csv`, true)
         const dataColumn = data[title]
         console.log(`${title}-${data[title].length}筆資料`)
         if (dataColumn.length > 0) {
