@@ -7,8 +7,10 @@
 npm start -h
 ```
 或者
+先編譯再執行
 
 ```bash
+npm build
 lib/index.js -h
 ```
 
@@ -22,4 +24,11 @@ lib/index.js -h
 Example 
 ```
     patch -d 1997/8/18
+```
+
+## 爬取範圍資料
+
+Example
+```
+    batch-patch -f 2018/5/20 -t 2018/5/25
 ```
