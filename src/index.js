@@ -1,13 +1,9 @@
 import Program from 'commander'
+import Controller from './controller'
 import StockHistory from './patcher/stockHistory'
 
-let data = {
-  date: null,
-  startDate: null,
-  toDate: null
-}
-
 const main = async () => {
+  let data = Controller.data()
   console.log(data.startDate, data.toDate)
   if (data.date) {
     (await StockHistory.getData(data.date)).toFiles()
@@ -20,30 +16,6 @@ const main = async () => {
   }
 }
 
-const setDate = (date) => {
-  if (Date.parse(date)) {
-    data.date = date
-  } else {
-    console.warn('-d: 請輸入正確的時間格式')
-  }
-}
-
-const setStart = (date) => {
-  if (Date.parse(date)) {
-    data.startDate = date
-  } else {
-    console.warn('-f: 請輸入正確的時間格式')
-  }
-}
-
-const setTo = (date) => {
-  if (Date.parse(date)) {
-    data.toDate = date
-  } else {
-    console.warn('-t: 請輸入正確的時間格式')
-  }
-}
-
 Program
   .version('0.0.1alpha')
 
@@ -51,7 +23,7 @@ Program
   .command('patch')
   .description('爬取資料')
   .option('-s, --single', 'Get Single date data')
-  .option('-d, --date [date]', 'Select a date', setDate)
+  .option('-d, --date [date]', 'Select a date', Controller.setDate)
   .action((env) => {
     main()
   })
@@ -59,8 +31,9 @@ Program
 Program
   .command('batch-patch')
   .description('爬取範圍')
-  .option('-f, --from [date]', 'from date', setStart)
-  .option('-t, --to [date]', 'to date', setTo)
+  .option('-f, --from [date]', 'from date', Controller.setStart)
+  .option('-t, --to [date]', 'to date', Controller.setTo)
+  .option('-d, --database', 'get data to database', Controller.setToDatabase)
   .action((env) => {
     main()
   })
