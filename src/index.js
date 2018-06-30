@@ -9,7 +9,11 @@ const main = async () => {
     (await StockHistory.getData(data.date)).toFiles()
   } 
   else if (data.startDate && data.toDate) {
-    (await StockHistory.getDataRange(data.startDate, data.toDate)).toFiles()
+    if (data.toDatabase) {
+      (await StockHistory.getDataRange(data.startDate, data.toDate)).toDatabase()
+    } else {
+      (await StockHistory.getDataRange(data.startDate, data.toDate)).toFiles()
+    }
   }
   else {
     console.log('未執行任何動作')

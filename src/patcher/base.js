@@ -2,6 +2,7 @@ import fs from 'fs'
 import axios from 'axios'
 import cheerio from 'cheerio'
 import FilesHelpter from '../utilits/fileHelper'
+import MysqlUtilits from '../utilits/mysql'
 
 export default class BasePatcher {
   defaultString = null
@@ -41,6 +42,24 @@ export default class BasePatcher {
           })
         }
         FilesHelpter.close()
+      }
+    }
+  }
+
+  async toDatabase() {
+    const data = this.data
+    if (data instanceof Object) {
+      for ( let title in data ) {
+        const dataColumn = data[title]
+        for(let column of dataColumn ) {
+          let tmpData = []
+          for (let type in column) {
+            tmpData.push(column[type])
+          }
+          await MysqlUtilits.query(`INSERT INTO world_stock_price(price, price_move, ratio, time, local_time, type)
+            VALUES('${tmpData[1]}','${tmpData[2]}','${tmpData[3]}','${tmpData[0]}','${tmpData[4]}', '${title}')
+          `)
+        }
       }
     }
   }

@@ -1,7 +1,8 @@
 let data = {
   date: null,
   startDate: null,
-  toDate: null
+	toDate: null,
+	toDatabase: false,
 }
 
 class Controller {

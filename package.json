@@ -13,6 +13,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "cheerio": "^1.0.0-rc.2",
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "promise-mysql": "^3.3.1"
   }
 }
