@@ -32,3 +32,12 @@ Example
 ```
     batch-patch -f 2018/5/20 -t 2018/5/25
 ```
+
+## 爬取範圍資料匯入至資料庫
+
+設定 config.js
+
+Example
+```
+    batch-patch -f 2018/5/20 -t 2018/5/25 --database
+```
