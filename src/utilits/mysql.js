@@ -6,6 +6,7 @@ var mysqlConn = false
 mysql.createConnection({
   host: db.host,
   user: db.userName,
+  port: db.port,
   password: db.password,
   database: db.name
 }).then(function(conn){

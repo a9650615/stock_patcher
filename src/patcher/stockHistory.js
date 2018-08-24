@@ -1,6 +1,6 @@
 import Base from './base'
 
-class StickqHistory extends Base {
+class StockHistory extends Base {
   async getData(data) {
     const date = new Date(Date.parse(data))
     const year = date.getFullYear()
@@ -76,4 +76,4 @@ class StickqHistory extends Base {
   }
 }
 
-export default new StickqHistory()
+export default new StockHistory()

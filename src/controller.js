@@ -3,9 +3,16 @@ let data = {
   startDate: null,
 	toDate: null,
 	toDatabase: false,
+	library: 'stock',
 }
 
 class Controller {
+
+	setLibrary = (set) => {
+		console.log('set:'+set)
+		data.library = set
+	}
+
 	setDate = (date) => {
 		if (Date.parse(date)) {
 				data.date = date
