@@ -13,7 +13,7 @@ const main = async () => {
   } 
   else if (data.startDate && data.toDate) {
     if (data.toDatabase) {
-      console.log(data.startDate, data.toDate)
+      // console.log(data.startDate, data.toDate)
       (await library.getDataRange(data.startDate, data.toDate, data.no)).toDatabase()
     } else {
       (await library.getDataRange(data.startDate, data.toDate, data.no)).toFiles()

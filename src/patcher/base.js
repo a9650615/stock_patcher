@@ -17,17 +17,26 @@ export default class BasePatcher {
   }
 
   async getApiFromUrl (url) {
-    const { data } = await axios.get(url)
-    console.log(`Getting: ${url}`)
-    this.json = data
+    return new Promise(async (resolve, reject) => {
+      setTimeout(async () => {
+        const { data } = await axios.get(url)
+        console.log(`Getting: ${url}`)
+        this.json = data
+        resolve()
+      }, 1000)
+    })
   }
 
   parseDate (data) {
-    const date = new Date(Date.parse(data))
+    // console.log(new Date(data))
+    // const date = new Date(Date.parse(data))
+    const date = new Date(data)
+    const time = parseInt(date.getTime() / 1000)
     const year = date.getFullYear()
     const month = ('0' + (date.getMonth() + 1)).slice(-2)
     const day = ('0' + date.getDate()).slice(-2)
     return {
+      time,
       year,
       month,
       day,
@@ -63,6 +72,7 @@ export default class BasePatcher {
             for (let type in value) {
               tmpData.push(value[type])
             }
+            if (tmpData.length)
             FilesHelpter.append(`${this.toCSVstruct(tmpData)}\n`)
           })
         }
