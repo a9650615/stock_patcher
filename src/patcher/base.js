@@ -8,6 +8,7 @@ export default class BasePatcher {
   defaultString = null
   html = null
   data = null
+  json = null
 
   async getWebSiteByUrl (url) {
     const { data } = await axios.get(url)
@@ -15,8 +16,32 @@ export default class BasePatcher {
     this.parseTag()
   }
 
+  async getApiFromUrl (url) {
+    const { data } = await axios.get(url)
+    console.log(`Getting: ${url}`)
+    this.json = data
+  }
+
+  parseDate (data) {
+    const date = new Date(Date.parse(data))
+    const year = date.getFullYear()
+    const month = ('0' + (date.getMonth() + 1)).slice(-2)
+    const day = ('0' + date.getDate()).slice(-2)
+    return {
+      year,
+      month,
+      day,
+    }
+  }
+
   parseTag () {
     this.html = cheerio.load(this.defaultString)
+  }
+
+  toCSVstruct(arr) {
+    return arr.map((val) => {
+      return `"${val}"`
+    }).join(',')
   }
 
   toFiles() {
@@ -38,7 +63,7 @@ export default class BasePatcher {
             for (let type in value) {
               tmpData.push(value[type])
             }
-            FilesHelpter.append(`${tmpData.join(',')}\n`)
+            FilesHelpter.append(`${this.toCSVstruct(tmpData)}\n`)
           })
         }
         FilesHelpter.close()

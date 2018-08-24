@@ -4,13 +4,17 @@ let data = {
 	toDate: null,
 	toDatabase: false,
 	library: 'stock',
+	no: null,
 }
 
 class Controller {
 
 	setLibrary = (set) => {
-		console.log('set:'+set)
 		data.library = set
+	}
+
+	setNo = (no) => {
+		data.no = no
 	}
 
 	setDate = (date) => {

@@ -1,7 +1,9 @@
 import StockHistory from './patcher/stockHistory'
+import TWSEPatcher from './patcher/twsePatcher'
 
 const libraries = {
   'stock': StockHistory,
+  'twse': TWSEPatcher,
 }
 
 export default class LibraryHelper {
