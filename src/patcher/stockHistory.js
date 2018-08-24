@@ -1,6 +1,8 @@
 import Base from './base'
 
 class StockHistory extends Base {
+  dbName = 'world_stock_price'
+
   async getData(data) {
     const date = new Date(Date.parse(data))
     const year = date.getFullYear()

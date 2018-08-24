@@ -49,6 +49,22 @@ class MysqlUtilits {
     `).catch((err) => {
       console.log(err.sqlMessage)
     })
+    mysqlConn.query(`
+      CREATE TABLE IF NOT EXISTS \`tw_stock_price\` (
+        \`date\` date NOT NULL,
+        \`deal_stock\` float NOT NULL,
+        \`deal_price\` float NOT NULL,
+        \`start_price\` float NOT NULL,
+        \`high_price\` float NOT NULL,
+        \`low_price\` float NOT NULL,
+        \`end_price\` float NOT NULL,
+        \`difference\` float NOT NULL,
+        \`deal_count\` int(11) NOT NULL,
+        \`no\` varchar(100) NOT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    `).catch((err) => {
+      console.log(err.sqlMessage)
+    })
   }
 
   query(text) {

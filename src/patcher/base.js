@@ -9,6 +9,7 @@ export default class BasePatcher {
   html = null
   data = null
   json = null
+  dbName = null
 
   async getWebSiteByUrl (url) {
     const { data } = await axios.get(url)
@@ -91,12 +92,19 @@ export default class BasePatcher {
           for (let type in column) {
             tmpData.push(column[type])
           }
-          await MysqlUtilits.query(`INSERT INTO world_stock_price(price, price_move, ratio, time, local_time, type)
-            VALUES('${tmpData[1]}','${tmpData[2]}','${tmpData[3]}','${tmpData[0]}','${tmpData[4]}', '${title}')
-          `)
+          if (this.dbName === 'world_stock_price') {
+            await MysqlUtilits.query(`INSERT INTO world_stock_price(price, price_move, ratio, time, local_time, type)
+              VALUES('${tmpData[1]}','${tmpData[2]}','${tmpData[3]}','${tmpData[0]}','${tmpData[4]}', '${title}')
+            `)
+          } else if (this.dbName === 'tw_stock_price') {
+            await MysqlUtilits.query(`INSERT INTO tw_stock_price(\`date\`, deal_stock, deal_price, start_price, high_price, low_price, end_price, difference, deal_count, no)
+              VALUES('${tmpData[0]}','${tmpData[1]}','${tmpData[2]}','${tmpData[3]}','${tmpData[4]}','${tmpData[5]}','${tmpData[6]}','${tmpData[7]}','${tmpData[8]}', '${tmpData[9]}')
+            `)
+          }
         }
       }
     }
+    console.log('All data write into database!')
   }
 
 }

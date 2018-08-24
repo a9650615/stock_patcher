@@ -1,6 +1,7 @@
 import Base from './base'
 
 class TWSEPatcher extends Base {
+  dbName = 'tw_stock_price'
   async getData (date, no) {
     const { year, month, day } = this.parseDate(date)
     if (!no || no == null) {
@@ -49,19 +50,20 @@ class TWSEPatcher extends Base {
       if (!search.length >= 1 && lastMonth != month) {
         lastMonth = month
         await this.getApiFromUrl(`http://www.twse.com.tw/zh/exchangeReport/STOCK_DAY?date=${`${year}${month}01`}&stockNo=${no}`)
-      } else {
-        console.log(`${dateTime} - ${year-1911}/${month}/${day}`)
       }
-      await this._parseDataRange(`${year-1911}/${month}/${day}`, title)
+      await this._parseDataRange(`${year-1911}/${month}/${day}`, title, no)
     }
-    console.log(this.data)
     return this;
   }
 
-  async _parseDataRange (date, title) {
+  async _parseDataRange (date, title, no) {
     const findData = this.keytoObject(this.json.fields, (this.json.data||[]).filter((data) => data[0] === date))[0];
-    if (findData)
-      this.data[title].push(findData)
+    if (findData) {
+      const date = findData['日期'].toString().split('/');
+      console.log(`get: ${(Number(date[0])+1911)}/${date[1]}/${date[2]}-`+`${date[0]}/${date[1]}/${date[2]}`)
+      findData['日期'] = `${(Number(date[0])+1911)}/${date[1]}/${date[2]}`
+      this.data[title].push(Object.assign(findData, { no: no }))
+    }
   }
 }
 
