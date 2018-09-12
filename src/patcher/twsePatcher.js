@@ -9,7 +9,7 @@ class TWSEPatcher extends Base {
       throw new Error('沒有設定股票編號')
     }
     await this.getApiFromUrl(`http://www.twse.com.tw/zh/exchangeReport/STOCK_DAY?date=${`${year}${month}01`}&stockNo=${no}`)
-    this._parseData(`${year-1911}/${month}/${day}`)
+    this._parseData(`${year-1911}/${month}/${day}`, no)
 
     return this
   }
@@ -26,10 +26,14 @@ class TWSEPatcher extends Base {
     return allObjArr
   }
 
-  _parseData (date) {
+  _parseData (date, no) {
     const data = {}
     const title = this.json.title.replace('             ','-')
-    data[title] = [...this.keytoObject(this.json.fields, this.json.data.filter((data) => data[0] === date))]
+    let singleData = [...this.json.data.filter((data) => data[0] === date)[0], no];
+    data[title] = [...this.keytoObject([...this.json.fields, '股票編號'], [singleData])]
+    let findData = data[title][0];
+    const newDate = findData['日期'].toString().split('/');
+    findData['日期'] = `${(Number(newDate[0])+1911)}/${newDate[1]}/${newDate[2]}`
     this.data = data;
   }
 
