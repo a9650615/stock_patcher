@@ -50,17 +50,17 @@ Example
     batch-patch -f 2018/5/20 -t 2018/5/25 --database
 ```
 
-#每日早上九點定期爬取資料
+### 每日早上九點定期爬取資料
 
---source 目前只有 twse
---stockNo 股票代號
+    --source 目前只有 twse
+    --stockNo 股票代號
 
 Example
 ```
     schedule-patch --source twse --stockNo 2330
 ```
 
-#每日九點爬取所有公司(從 DB 撈取)股市資料
+### 每日九點爬取所有公司(從 DB 撈取)股市資料
 
 --source 來源, 目前只有 twse
 
