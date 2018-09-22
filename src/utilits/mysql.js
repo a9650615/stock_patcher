@@ -68,7 +68,8 @@ class MysqlUtilits {
   }
 
   query(text) {
-    return mysqlConn.query(text)
+    if (mysqlConn)
+      return mysqlConn.query(text)
   }
 }
 

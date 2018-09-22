@@ -1,4 +1,5 @@
 import Base from './base'
+import CompanyHelper from '../helper/companyHelper'
 
 class TWSEPatcher extends Base {
   dbName = 'tw_stock_price'
@@ -68,6 +69,16 @@ class TWSEPatcher extends Base {
       findData['日期'] = `${(Number(date[0])+1911)}/${date[1]}/${date[2]}`
       this.data[title].push(Object.assign(findData, { no: no }))
     }
+  }
+
+  async getAllCompanyDateRange(startDate, toDate) {
+    const allCompany = await CompanyHelper.getAllCompany()
+    let data
+    do {
+      data = allCompany.next()
+      console.log(`抓取代號: ${data.value}`)
+      await(await this.getDataRange(startDate, toDate, data.value)).toDatabase()
+    } while(!data.done)
   }
 }
 

@@ -5,6 +5,7 @@ let data = {
 	toDatabase: false,
 	library: 'stock',
 	no: null,
+	needPatchAll: false,
 }
 
 class Controller {
@@ -43,6 +44,10 @@ class Controller {
 		
 	setToDatabase = () => {
 		data.toDatabase = true
+	}
+
+	setNeedPatchAll = (needed) => {
+		data.needPatchAll = needed;
 	}
 
 	data = () => {

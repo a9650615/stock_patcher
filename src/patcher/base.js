@@ -24,7 +24,7 @@ export default class BasePatcher {
         console.log(`Getting: ${url}`)
         this.json = data
         resolve()
-      }, 1000)
+      }, 6000)
     })
   }
 

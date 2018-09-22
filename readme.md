@@ -35,6 +35,14 @@ Example
 
 ## 爬取範圍資料匯入至資料庫
 
+    --source 設定來源, 不設定則為 stockq 國際股市
+    --no 非國際股市可設定股票代號抓取特定股票
+    --from 開始時間
+    --to 結束時間
+    --database 儲存至 DB
+    --all 抓取所有公司, 則不需 stockNo 選項(source 為 twse)
+
+
 設定 config.js
 
 Example
@@ -50,4 +58,13 @@ Example
 Example
 ```
     schedule-patch --source twse --stockNo 2330
+```
+
+#每日九點爬取所有公司(從 DB 撈取)股市資料
+
+--source 來源, 目前只有 twse
+
+Example
+```
+    schedule-patch-all --source twse
 ```
