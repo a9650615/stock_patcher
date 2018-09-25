@@ -47,6 +47,10 @@ class TWSEPatcher extends Base {
     const { time: toTime } = this.parseDate(toDate)
     let lastMonth = fromMonth
     await this.getApiFromUrl(`http://www.twse.com.tw/zh/exchangeReport/STOCK_DAY?date=${`${fromYear}${fromMonth}01`}&stockNo=${no}`)
+    if (this.json.title === undefined) {
+      console.warn('沒有查詢到資料, 可能編號有誤')
+      return this
+    }
     const title = this.json.title.replace('             ','-')
     this.data = { [title]: [] }
     for(let dateTime = fromTime; dateTime <= toTime; dateTime += 86400) {
@@ -74,6 +78,10 @@ class TWSEPatcher extends Base {
   async getAllCompanyDateRange(startDate, toDate) {
     const allCompany = await CompanyHelper.getAllCompany()
     let data
+    // do {
+    //   data = allCompany.next()
+    //   console.log(data.value)
+    // } while(!data.done)
     do {
       data = allCompany.next()
       console.log(`抓取代號: ${data.value}`)

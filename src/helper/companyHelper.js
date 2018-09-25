@@ -1,12 +1,20 @@
 import MysqlUtility from '../utilits/mysql'
 
 class CompanyHelper {
+
+  preFormat = (value) => {
+    // if (value.charAt(0) === '0' && value.length > 4) {
+    //   return value.substring(value.length - 4, value.length)
+    // }
+    return value
+  }
+
   makeDataYield = function *(data) {
     for (let index = 0; index < data.length; index++) {
       if (index == data.length - 1)
-        return data[index].no
+        return this.preFormat(data[index].no)
       else
-        yield data[index].no
+        yield this.preFormat(data[index].no)
     }
   }
 

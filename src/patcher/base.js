@@ -104,7 +104,11 @@ export default class BasePatcher {
         }
       }
     }
-    console.log('All data write into database!')
+    if (data) {
+      console.log('All data write into database!')
+    } else {
+      console.log('沒有寫入資料')
+    }
   }
 
 }
