@@ -20,10 +20,16 @@ export default class BasePatcher {
   async getApiFromUrl (url) {
     return new Promise(async (resolve, reject) => {
       setTimeout(async () => {
-        const { data } = await axios.get(url)
-        console.log(`Getting: ${url}`)
-        this.json = data
-        resolve()
+        try {
+          const { data } = await axios.get(url)
+          console.log(`Getting: ${url}`)
+          this.json = data
+          resolve()
+        } catch (e) {
+          console.warn(`獲取 ${url} 失敗`);
+          await this.getApiFromUrl(url)
+          resolve()
+        }
       }, 6000)
     })
   }
