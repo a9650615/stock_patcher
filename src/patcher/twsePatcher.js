@@ -49,6 +49,7 @@ class TWSEPatcher extends Base {
     await this.getApiFromUrl(`http://www.twse.com.tw/zh/exchangeReport/STOCK_DAY?date=${`${fromYear}${fromMonth}01`}&stockNo=${no}`)
     if (this.json.title === undefined) {
       console.warn('沒有查詢到資料, 可能編號有誤')
+      this.data = null
       return this
     }
     const title = this.json.title.replace('             ','-')
