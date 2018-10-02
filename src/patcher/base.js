@@ -12,9 +12,16 @@ export default class BasePatcher {
   dbName = null
 
   async getWebSiteByUrl (url) {
-    const { data } = await axios.get(url)
-    this.defaultString = data
-    this.parseTag()
+		try {
+			const { data } = await axios.get(url)
+			this.defaultString = data
+      this.parseTag()
+      return this
+		} catch (e) {
+			this.html = null
+			this.defaultString = null
+			throw new Error('抓取錯誤')
+		}
   }
 
   async getApiFromUrl (url) {
