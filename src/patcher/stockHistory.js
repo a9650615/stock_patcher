@@ -43,7 +43,7 @@ class StockHistory extends Base {
     const toTime = new Date(to).getTime()/1000
     console.log(toTime-fromTime)
     let data = {}
-    if (toTime > fromTime) {
+    if (toTime >= fromTime) {
       for(let dateTime = fromTime; dateTime <= toTime; dateTime += 86400) {
         const date = new Date(dateTime*1000)
         const year = date.getFullYear()
