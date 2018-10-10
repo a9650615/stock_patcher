@@ -63,7 +63,7 @@ const schedulePatch = async () => {
 }
 
 Program
-  .version('0.0.1alpha')
+  .version('0.0.3alpha')
 
 Program
   .command('patch')
@@ -104,10 +104,12 @@ Program
 Program
   .command('schedule-patch-all')
   .description('定時爬取全部')
-  .option('-s, --source [source]', 'Get data from source', Controller.setLibrary)
+  .option('-s, --source [source]', 'Get data from source', (library) => {
+    Controller.setLibrary(library)
+    Controller.setNeedPatchAll(true)
+  })
   .action((env) => {
     Controller.setToDatabase()
-    Controller.setNeedPatchAll(true)
     schedulePatch()
   })
 

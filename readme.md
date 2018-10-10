@@ -62,7 +62,7 @@ Example
 
 ### 每日九點爬取所有公司(從 DB 撈取)股市資料
 
---source 來源, 目前只有 twse
+--source 來源, 目前只有 twse 不使用則為 stockq
 
 Example
 ```
