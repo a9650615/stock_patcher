@@ -3,15 +3,24 @@ import { db } from '../config'
 
 var mysqlConn = false
 
-mysql.createConnection({
-  host: db.host,
-  user: db.userName,
-  port: db.port,
-  password: db.password,
-  database: db.name
-}).then(function(conn){
-  mysqlConn = conn
-})
+const AutoCreateConnection = () => {
+  mysql.createConnection({
+    host: db.host,
+    user: db.userName,
+    port: db.port,
+    password: db.password,
+    database: db.name
+  }).then(function(conn){
+    mysqlConn = conn
+  }).catch((err) => {
+    console.warn('got an Err:', err)
+    setTimeout(() => {
+      AutoCreateConnection()
+    }, 2000)
+  })
+}
+
+AutoCreateConnection()
 
 class MysqlUtilits {
   timer = null
