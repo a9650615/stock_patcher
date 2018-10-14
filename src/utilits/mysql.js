@@ -83,7 +83,7 @@ class MysqlUtilits {
 
   async query(text) {
     const conn = await pool.getConnection()
-    console.log(text)
+    // console.log(text)
     const data = conn.query(text)
     // if (conn)
     pool.releaseConnection(conn)
