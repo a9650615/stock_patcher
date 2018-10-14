@@ -37,7 +37,7 @@ export default class BasePatcher {
           await this.getApiFromUrl(url)
           resolve()
         }
-      }, 6000)
+      }, 6500)
     })
   }
 

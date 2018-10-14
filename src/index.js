@@ -38,7 +38,7 @@ const main = async (customData = null) => {
 
 const schedulePatch = async () => {
   // 0 0 9 * * *
-  Schedule.scheduleJob('0 0 9 * * *', async () => {
+  Schedule.scheduleJob('0 0 1 * * *', async () => {
     let data = Controller.data()
     const date = new Date()
     const preDate = new Date(date.getTime() - 86400000);
@@ -63,7 +63,7 @@ const schedulePatch = async () => {
 }
 
 Program
-  .version('0.0.3alpha')
+  .version('0.0.4')
 
 Program
   .command('patch')

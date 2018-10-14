@@ -2,22 +2,25 @@ import mysql from 'promise-mysql'
 import { db } from '../config'
 
 var mysqlConn = false
+var pool = null
 
 const AutoCreateConnection = () => {
-  mysql.createConnection({
+  pool = mysql.createPool({
     host: db.host,
     user: db.userName,
     port: db.port,
     password: db.password,
-    database: db.name
-  }).then(function(conn){
-    mysqlConn = conn
-  }).catch((err) => {
-    console.warn('got an Err:', err)
-    setTimeout(() => {
-      AutoCreateConnection()
-    }, 2000)
+    database: db.name,
+    connectionLimit: 10
   })
+  // .then(function(conn){
+  //   mysqlConn = conn
+  // }).catch((err) => {
+  //   console.warn('got an Err:', err)
+  //   setTimeout(() => {
+  //     AutoCreateConnection()
+  //   }, 2000)
+  // })
 }
 
 AutoCreateConnection()
@@ -26,15 +29,17 @@ class MysqlUtilits {
   timer = null
 
   constructor() {
-    this.timer = setInterval(() => { 
-      if (mysqlConn) {
-        clearInterval(this.timer)
-        this.preRun()
-      }
-    }, 100)
+    // this.timer = setInterval(() => { 
+    //   if (mysqlConn) {
+    //     clearInterval(this.timer)
+    //     this.preRun()
+    //   }
+    // }, 100)
+    this.preRun()
   }
 
-  preRun() {
+  async preRun() {
+    const mysqlConn = await pool.getConnection()
     mysqlConn.query(`
       CREATE TABLE IF NOT EXISTS \`world_stock_price\` (
         \`ID\` int(255) NOT NULL,
@@ -76,9 +81,13 @@ class MysqlUtilits {
     })
   }
 
-  query(text) {
-    if (mysqlConn)
-      return mysqlConn.query(text)
+  async query(text) {
+    const conn = await pool.getConnection()
+    console.log(text)
+    const data = conn.query(text)
+    // if (conn)
+    pool.releaseConnection(conn)
+    return data
   }
 }
 
